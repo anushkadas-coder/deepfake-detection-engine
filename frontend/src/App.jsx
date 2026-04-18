@@ -79,7 +79,7 @@ function App() {
     formData.append('file', selectedFile);
 
     try {
-      const response = await axios.post('http://127.0.0.1:8080/predict', formData, {
+      const response = await axios.post('https://anushkadas-deepfake-detection-api.hf.space/predict', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setTimeout(() => {

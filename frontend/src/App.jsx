@@ -106,7 +106,7 @@ function App() {
           <div className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center shadow-sm">
             <Activity className="w-4 h-4 text-zinc-300" />
           </div>
-          <span className="font-semibold tracking-tight text-zinc-100">Inference<span className="text-zinc-500">Engine</span></span>
+          <span className="font-semibold tracking-tight text-zinc-100">Deepfake<span className="text-zinc-500">Detector</span></span>
         </div>
         <div className="flex items-center gap-3">
           <div className="px-2 py-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-mono tracking-wider flex items-center gap-1.5">

@@ -51,7 +51,6 @@ function App() {
   };
 
   const processFile = (file) => {
-    // UPDATE: Now checks for BOTH image and video formats
     if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) {
       setError("ERR: Invalid format. Awaiting image or video file.");
       return;
@@ -79,6 +78,7 @@ function App() {
     formData.append('file', selectedFile);
 
     try {
+      // CHANGED: Pointing to your live Hugging Face Space instead of localhost
       const response = await axios.post('https://anushkadas-deepfake-detection-api.hf.space/predict', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
@@ -87,7 +87,8 @@ function App() {
         setLoading(false);
       }, 1500);
     } catch (err) {
-      setError("FATAL: Inference engine unreachable. Verify FastAPI port 8080.");
+      // CHANGED: Updated error message for Cloud Deployment
+      setError("FATAL: Cloud Inference engine unreachable. Ensure Hugging Face Space is 'Running'.");
       setLoading(false);
     }
   };
@@ -142,16 +143,13 @@ function App() {
                   ${isDragging ? 'border-indigo-500 bg-indigo-500/5' : 'border-zinc-700 bg-zinc-900/50 hover:border-zinc-500 hover:bg-zinc-800/50'}`}
               >
                 <UploadCloud className="w-8 h-8 text-zinc-500 mb-3" />
-                {/* UPDATE: Text changed to accept media and video formats */}
                 <p className="text-sm font-medium text-zinc-300">Select media for analysis</p>
                 <p className="text-xs text-zinc-600 mt-1 font-mono">JPG, PNG, WEBP, MP4, MOV</p>
-                {/* UPDATE: Input tag now accepts video/* */}
                 <input type="file" className="hidden" accept="image/*,video/*" onChange={handleFileChange} ref={fileInputRef} />
               </div>
             ) : (
               <div className="flex-1 flex flex-col relative rounded-xl overflow-hidden border border-zinc-800 bg-[#09090b]">
                 
-                {/* UPDATE: Smart detection for Video vs Image preview */}
                 {selectedFile && selectedFile.type.startsWith('video/') ? (
                   <video src={previewUrl} autoPlay loop muted playsInline className="w-full h-full object-contain absolute inset-0 opacity-80 mix-blend-screen" />
                 ) : (
@@ -227,7 +225,6 @@ function App() {
                       <span className="text-5xl font-light tracking-tighter text-zinc-100 font-mono">{result.confidence}</span>
                       <span className="text-xl text-zinc-500 font-mono pb-1">%</span>
                     </div>
-                    {/* Tiny Progress Bar */}
                     <div className="h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
                       <div 
                         className={`h-full rounded-full ${result.prediction === 'REAL' ? 'bg-emerald-500' : 'bg-rose-500'}`} 
@@ -261,11 +258,9 @@ function App() {
               </div>
             </>
           ) : (
-            /* Placeholder State for Right Column */
             <div className="h-full bg-[#18181b]/50 border border-zinc-800/50 border-dashed rounded-2xl p-6 flex flex-col items-center justify-center text-center">
               <Cpu className="w-10 h-10 text-zinc-800 mb-4" />
               <p className="text-sm text-zinc-400 font-medium">Awaiting Input Tensor</p>
-              {/* UPDATE: Text changed to include video */}
               <p className="text-xs text-zinc-600 mt-2 font-mono max-w-[250px]">
                 Upload an image or video to initialize the analysis pipeline and view output metrics.
               </p>

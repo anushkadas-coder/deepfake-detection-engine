@@ -1,7 +1,8 @@
+fastapi
+uvicorn
 torch
 torchvision
-opencv-python
+opencv-python-headless
 numpy
-mediapipe
-scikit-learn
-matplotlib
+python-multipart
+scipy
